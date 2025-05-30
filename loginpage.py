@@ -8,7 +8,6 @@ st.set_page_config(
     initial_sidebar_state="collapsed"  # Ẩn sidebar mặc định
 )
 
-st.set_page_config(page_title="Chọn loại đăng nhập", layout="centered")
 st.title("🔐 Đăng nhập hệ thống")
 
 login_type = st.radio("Chọn vai trò", ["Admin", "Giảng viên"], horizontal=True)
