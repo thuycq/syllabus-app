@@ -1,0 +1,41 @@
+import streamlit as st
+import json
+import os
+
+ADMIN_FILE = "admin_account.json"
+
+# Load admin info
+def load_admin():
+    if os.path.exists(ADMIN_FILE):
+        with open(ADMIN_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {"username": "admin", "password": "123456"}
+
+# Session mặc định
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+if "role" not in st.session_state:
+    st.session_state.role = None
+
+st.set_page_config(page_title="Đăng nhập Admin", layout="centered")
+st.title("🔐 Đăng nhập quản trị")
+
+username = st.text_input("Tên đăng nhập", placeholder="admin")
+password = st.text_input("Mật khẩu", type="password")
+
+col1, col2 = st.columns([1, 1])
+
+with col1:
+    if st.button("🔐 Đăng nhập"):
+        admin = load_admin()
+        if username == admin.get("username") and password == admin.get("password"):
+            st.session_state.logged_in = True
+            st.session_state.role = "admin"
+            st.success("✅ Đăng nhập thành công!")
+            st.switch_page("pages/2_adminpage.py")
+        else:
+            st.error("❌ Sai tài khoản hoặc mật khẩu.")
+
+with col2:
+    if st.button("🔙 Trở lại"):
+        st.switch_page("loginpage.py")

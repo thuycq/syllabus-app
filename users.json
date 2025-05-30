@@ -1,0 +1,38 @@
+{
+    "thuycq@uel.edu.vn": {
+        "role": "gv",
+        "password": "123456"
+    },
+    "anhnh@uel.edu.vn": {
+        "role": "gv",
+        "password": "123456"
+    },
+    "liemnt@uel.edu.vn": {
+        "role": "gv",
+        "password": "123456"
+    },
+    "trungnt@uel.edu.vn": {
+        "role": "gv",
+        "password": "abc123"
+    },
+    "khoapc@uel.edu.vn": {
+        "role": "gv",
+        "password": "123456"
+    },
+    "phongna@uel.edu.vn": {
+        "role": "gv",
+        "password": "abc123"
+    },
+    "thanhnp@uel.edu.vn": {
+        "role": "gv",
+        "password": "123456"
+    },
+    "tamph@uel.edu.vn": {
+        "role": "gv",
+        "password": "123456"
+    },
+    "admin": {
+        "role": "gv",
+        "password": "1"
+    }
+}
