@@ -1,5 +1,13 @@
 import streamlit as st
 
+# Cấu hình giao diện chính
+st.set_page_config(
+    page_title="Syllabus App - Đăng nhập",
+    page_icon="📚",
+    layout="wide",
+    initial_sidebar_state="collapsed"  # Ẩn sidebar mặc định
+)
+
 st.set_page_config(page_title="Chọn loại đăng nhập", layout="centered")
 st.title("🔐 Đăng nhập hệ thống")
 
@@ -11,3 +19,13 @@ if login_type == "Admin":
 elif login_type == "Giảng viên":
     if st.button("Đăng nhập với Email UEL"):
         st.switch_page("pages/1_gv_login.py")
+
+hide_streamlit_style = """
+        <style>
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        header {visibility: hidden;}
+        [data-testid="stSidebar"] {display: none;}
+        </style>
+        """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
