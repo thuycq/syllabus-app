@@ -3,14 +3,6 @@ from utils import setup_page
 
 setup_page("Syllabus App - Đăng nhập", "📚")
 
-# Cấu hình giao diện chính
-st.set_page_config(
-    page_title="Syllabus App - Đăng nhập",
-    page_icon="📚",
-    layout="wide",
-    initial_sidebar_state="collapsed"  # Ẩn sidebar mặc định
-)
-
 st.title("🔐 Đăng nhập hệ thống")
 
 login_type = st.radio("Chọn vai trò", ["Admin", "Giảng viên"], horizontal=True)
