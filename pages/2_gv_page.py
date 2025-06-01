@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import os
+from utils import setup_page
+
+setup_page("Syllabus App - Giangvien", "📚")
 
 
 st.set_page_config(page_title="Trang Giảng viên", layout="wide")

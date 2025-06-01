@@ -8,6 +8,9 @@ from datetime import date
 import streamlit as st
 import os
 import pandas as pd
+from utils import setup_page
+
+setup_page("Syllabus App - Syllabus", "📚")
 
 
 # Tải ảnh logo từ Google Drive

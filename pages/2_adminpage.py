@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import os
+from utils import setup_page
+
+setup_page("Syllabus App - Admin Page", "📚")
 
 st.set_page_config(page_title="Admin - Danh sách đề cương", layout="wide")
 # Thanh công cụ trên cùng: Đổi mật khẩu | Đăng xuất

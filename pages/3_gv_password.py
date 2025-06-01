@@ -1,6 +1,9 @@
 import streamlit as st
 import json
 import os
+from utils import setup_page
+
+setup_page("Syllabus App - GV Password", "📚")
 
 USER_FILE = "users.json"
 
