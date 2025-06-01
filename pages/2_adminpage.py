@@ -96,18 +96,19 @@ if st.session_state.get("show_table_flag", False):
 
 st.write("### 🔄 Quản lý Syllabus list")
 
-file_name = f"Import-{he}-{khoa}-{ctdt}.xlsx"
-file_path = f"syllabus list/{file_name}"
+if he and khoa and ctdt:
+    file_name = f"Import-{he}-{khoa}-{ctdt}.xlsx"
+    file_path = f"syllabus list/{file_name}"
 
-if st.button("🗑️ Xóa danh sách đề cương cho chương trình này"):
-    try:
-        if os.path.isfile(file_path):
-            os.remove(file_path)
-            st.success(f"✅ Đã xóa file: {file_name}")
-        else:
-            st.warning(f"⚠️ File không tồn tại: {file_name}")
-    except Exception as e:
-        st.error(f"❌ Lỗi khi xóa file: {e}")
+    if st.button("🗑️ Xóa danh sách đề cương cho chương trình này"):
+        try:
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+                st.success(f"✅ Đã xóa file: {file_name}")
+            else:
+                st.warning(f"⚠️ File không tồn tại: {file_name}")
+        except Exception as e:
+            st.error(f"❌ Lỗi khi xóa file: {e}")
 
 # ========== FILE MẪU EXCEL ==========
 #st.markdown("### 📥 Tải file mẫu danh sách đề cương (.xlsx)")
