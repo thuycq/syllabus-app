@@ -94,9 +94,12 @@ if st.session_state.get("show_table_flag", False):
         st.session_state["edited_df_existing"].to_excel(file_path, index=False, engine='openpyxl')
         st.success(f"✅ Đã lưu danh sách sau chỉnh sửa: {os.path.basename(file_path)}")
 
-st.write("### 🔄 Quản lý danh sách đề cương")
+st.write("### 🔄 Quản lý Syllabus list")
 
-if st.button("🗑️ Xóa danh sách đề cương"):
+file_name = f"Import-{selected_level}-{selected_course}-{selected_program}.xlsx"
+file_path = f"syllabus list/{file_name}"
+
+if st.button("🗑️ Xóa danh sách"):
     folder = "syllabus list"
     count = 0
     for filename in os.listdir(folder):
