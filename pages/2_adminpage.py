@@ -94,6 +94,21 @@ if st.session_state.get("show_table_flag", False):
         st.session_state["edited_df_existing"].to_excel(file_path, index=False, engine='openpyxl')
         st.success(f"✅ Đã lưu danh sách sau chỉnh sửa: {os.path.basename(file_path)}")
 
+st.write("### 🔄 Quản lý danh sách đề cương")
+
+if st.button("🗑️ Xóa danh sách đề cương"):
+    folder = "syllabus list"
+    count = 0
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        try:
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+                count += 1
+        except Exception as e:
+            st.error(f"❌ Lỗi khi xóa {filename}: {e}")
+
+    st.success(f"✅ Đã xóa {count} file trong 'syllabus list/'")
 
 # ========== FILE MẪU EXCEL ==========
 #st.markdown("### 📥 Tải file mẫu danh sách đề cương (.xlsx)")
