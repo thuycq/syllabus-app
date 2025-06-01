@@ -6,8 +6,6 @@ from utils import setup_page
 setup_page("Syllabus App - GV", "📚")
 
 
-st.set_page_config(page_title="Trang Giảng viên", layout="wide")
-
 # Thanh công cụ trên cùng: Đổi mật khẩu | Đăng xuất
 col_user_empty, col_user_pass, col_user_logout = st.columns([7, 1.5, 1.5])
 

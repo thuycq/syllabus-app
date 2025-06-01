@@ -20,7 +20,6 @@ if "logged_in" not in st.session_state:
 if "role" not in st.session_state:
     st.session_state.role = None
 
-st.set_page_config(page_title="Đăng nhập Giảng viên", layout="centered")
 st.title("🎓 Đăng nhập dành cho Giảng viên")
 
 email = st.text_input("Email UEL", placeholder="vd: gv01@uel.edu.vn")

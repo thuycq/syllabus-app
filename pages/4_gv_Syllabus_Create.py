@@ -20,7 +20,6 @@ with open(logo_path, "wb") as f:
     f.write(requests.get(logo_url).content)
 
 
-st.set_page_config(page_title="Syllabus Management", page_icon="📘", layout="wide")
 st.title("Soạn thảo đề cương môn họcc")
 
 

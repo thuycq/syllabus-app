@@ -5,7 +5,6 @@ from utils import setup_page
 
 setup_page("Syllabus App - Admin", "📚")
 
-st.set_page_config(page_title="Admin - Danh sách đề cương", layout="wide")
 # Thanh công cụ trên cùng: Đổi mật khẩu | Đăng xuất
 col_admin_empty, col_admin_pass, col_admin_logout = st.columns([7, 1.5, 1.5])
 

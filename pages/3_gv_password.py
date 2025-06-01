@@ -24,7 +24,6 @@ if "logged_in" not in st.session_state or st.session_state.role != "gv":
 
 email = st.session_state.get("user_email", "")
 
-st.set_page_config(page_title="Đổi mật khẩu", layout="centered")
 st.title("🔐 Đổi mật khẩu tài khoản")
 
 users = load_users()

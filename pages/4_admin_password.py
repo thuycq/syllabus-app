@@ -5,7 +5,6 @@ from utils import setup_page
 
 setup_page("Syllabus App - Admin Đổi mật khẩu"", "📚")
 
-st.set_page_config(page_title="Đổi mật khẩu Admin", layout="centered")
 st.title("🔐 Đổi mật khẩu Admin")
 
 # File admin_account.json
