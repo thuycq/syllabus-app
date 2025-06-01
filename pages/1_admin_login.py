@@ -20,7 +20,6 @@ if "logged_in" not in st.session_state:
 if "role" not in st.session_state:
     st.session_state.role = None
 
-st.set_page_config(page_title="Đăng nhập Admin", layout="centered")
 st.title("🔐 Đăng nhập quản trị")
 
 username = st.text_input("Tên đăng nhập", placeholder="admin")
