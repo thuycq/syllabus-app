@@ -9,6 +9,8 @@ import streamlit as st
 import os
 import pandas as pd
 from utils import setup_page
+from pydrive2.auth import GoogleAuth
+from pydrive2.drive import GoogleDrive
 
 setup_page("Syllabus App - Soạn đề cương", "📚")
 
@@ -595,6 +597,30 @@ def export_syllabus_to_word(
     doc.save(full_file_path)
 
     return full_file_path
+
+    full_file_path = save_doc(...)
+
+    # Sau đó gọi upload Drive:
+    from pydrive2.auth import GoogleAuth
+    from pydrive2.drive import GoogleDrive
+
+    gauth = GoogleAuth()
+    gauth.LoadServiceConfigFile("credentials.json")
+    gauth.ServiceAuth()
+
+    drive = GoogleDrive(gauth)
+
+    file_name = os.path.basename(full_file_path)
+
+    file_drive = drive.CreateFile({
+        "title": file_name
+        # "parents": [{"id": folder_id}]  # nếu cần
+    })
+
+    file_drive.SetContentFile(full_file_path)
+    file_drive.Upload()
+
+    st.success(f"✅ Đã upload đề cương lên Google Drive! [Mở file trên Drive]({file_drive['alternateLink']})")
 
 # --- Export Button ---
 col1, col2 = st.columns(2)
