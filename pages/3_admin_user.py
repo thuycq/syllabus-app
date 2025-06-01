@@ -23,6 +23,10 @@ def save_users(users):
 # Load dữ liệu người dùng
 users = load_users()
 
+st.divider()
+if st.button("⬅️ Quay lại trang Admin"):
+    st.switch_page("2_adminpage")
+
 st.title("👥 Quản lý tài khoản")
 
 # ======= Hiển thị danh sách tài khoản =======
@@ -111,3 +115,4 @@ if st.button("✅ Thêm tất cả tài khoản"):
         st.rerun()
     else:
         st.warning("⚠️ Không có tài khoản nào được thêm (trùng hoặc không hợp lệ).")
+
