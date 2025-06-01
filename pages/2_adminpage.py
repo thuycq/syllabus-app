@@ -99,19 +99,15 @@ st.write("### 🔄 Quản lý Syllabus list")
 file_name = f"Import-{he}-{khoa}-{ctdt}.xlsx"
 file_path = f"syllabus list/{file_name}"
 
-if st.button("🗑️ Xóa danh sách"):
-    folder = "syllabus list"
-    count = 0
-    for filename in os.listdir(folder):
-        file_path = os.path.join(folder, filename)
-        try:
-            if os.path.isfile(file_path):
-                os.remove(file_path)
-                count += 1
-        except Exception as e:
-            st.error(f"❌ Lỗi khi xóa {filename}: {e}")
-
-    st.success(f"✅ Đã xóa {count} file trong 'syllabus list/'")
+if st.button("🗑️ Xóa danh sách đề cương cho chương trình này"):
+    try:
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+            st.success(f"✅ Đã xóa file: {file_name}")
+        else:
+            st.warning(f"⚠️ File không tồn tại: {file_name}")
+    except Exception as e:
+        st.error(f"❌ Lỗi khi xóa file: {e}")
 
 # ========== FILE MẪU EXCEL ==========
 #st.markdown("### 📥 Tải file mẫu danh sách đề cương (.xlsx)")
