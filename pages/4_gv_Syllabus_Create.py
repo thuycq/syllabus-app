@@ -12,6 +12,10 @@ from utils import setup_page
 
 setup_page("Syllabus App - Soạn đề cương", "📚")
 
+col1, col2 = st.columns([8, 1])  # cột trái 8 phần, cột phải 1 phần
+with col2:
+    if st.button("⬅️ Quay lại trang Quản lý"):
+        st.switch_page("pages/2_gv_page.py")
 
 # Tải ảnh logo từ Google Drive
 logo_url = "https://drive.google.com/uc?export=download&id=1TunxDkuBhjAjkNYwuYGEAkVXOyN2RJdO"
