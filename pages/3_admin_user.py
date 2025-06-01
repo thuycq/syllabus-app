@@ -25,7 +25,7 @@ users = load_users()
 
 st.divider()
 if st.button("⬅️ Quay lại trang Admin"):
-    st.switch_page("2_adminpage")
+    st.switch_page("pages/2_adminpage")
 
 st.title("👥 Quản lý tài khoản")
 
