@@ -2,3 +2,4 @@ streamlit>=1.25
 pandas
 python-docx
 openpyxl
+pydrive2
