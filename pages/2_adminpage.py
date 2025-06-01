@@ -66,7 +66,7 @@ else:
 
 # ========== NÚT LẤY DANH SÁCH ĐỀ CƯƠNG ==========
 if da_chon_day_du:
-    if st.button("📋 Lấy danh sách"):
+    if st.button("📋 Lấy list đề cương cho CTĐT"):
         file_path = os.path.join("syllabus list", f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx")
         if os.path.exists(file_path):
             st.session_state["edited_df_existing"] = pd.read_excel(file_path, engine="openpyxl")
@@ -84,6 +84,7 @@ if st.session_state.get("show_table_flag", False):
         column_config={
             "Mã HP": st.column_config.TextColumn("Mã HP"),
             "Tên HP": st.column_config.TextColumn("Tên HP"),
+            "Tên GV soạn": st.column_config.TextColumn("Tên GV soạn"),
         },
         use_container_width=True
     )
@@ -94,21 +95,6 @@ if st.session_state.get("show_table_flag", False):
         st.session_state["edited_df_existing"].to_excel(file_path, index=False, engine='openpyxl')
         st.success(f"✅ Đã lưu danh sách sau chỉnh sửa: {os.path.basename(file_path)}")
 
-st.write("### 🔄 Quản lý Syllabus list")
-
-if he and khoa and ctdt:
-    file_name = f"Import-{he}-{khoa}-{ctdt}.xlsx"
-    file_path = f"syllabus list/{file_name}"
-
-    if st.button("🗑️ Xóa danh sách đề cương cho chương trình này"):
-        try:
-            if os.path.isfile(file_path):
-                os.remove(file_path)
-                st.success(f"✅ Đã xóa file: {file_name}")
-            else:
-                st.warning(f"⚠️ File không tồn tại: {file_name}")
-        except Exception as e:
-            st.error(f"❌ Lỗi khi xóa file: {e}")
 
 # ========== FILE MẪU EXCEL ==========
 #st.markdown("### 📥 Tải file mẫu danh sách đề cương (.xlsx)")
@@ -137,8 +123,7 @@ with open(file_path, "rb") as f:
     )
 
 # ========== IMPORT EXCEL ==========
-#st.markdown("### 📤 Import danh sách đề cương (.xlsx)")
-uploaded_file = st.file_uploader("📤 Tải lên file Excel (.xlsx)", type=["xlsx"])
+uploaded_file = st.file_uploader("📤 Tải lên List đề cương (.xlsx)", type=["xlsx"])
 
 if uploaded_file is not None:
     try:
