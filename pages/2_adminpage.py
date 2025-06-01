@@ -96,7 +96,7 @@ if st.session_state.get("show_table_flag", False):
 
 st.write("### 🔄 Quản lý Syllabus list")
 
-file_name = f"Import-{selected_level}-{selected_course}-{selected_program}.xlsx"
+file_name = f"Import-{he}-{khoa}-{ctdt}.xlsx"
 file_path = f"syllabus list/{file_name}"
 
 if st.button("🗑️ Xóa danh sách"):
