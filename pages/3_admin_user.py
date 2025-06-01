@@ -23,7 +23,6 @@ def save_users(users):
 # Load dữ liệu người dùng
 users = load_users()
 
-st.set_page_config(page_title="Quản lý tài khoản", layout="centered")
 st.title("👥 Quản lý tài khoản")
 
 # ======= Hiển thị danh sách tài khoản =======
