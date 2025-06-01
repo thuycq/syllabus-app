@@ -15,10 +15,10 @@ with col_admin_pass:
 with col_admin_logout:
     if st.button("🚪 Đăng xuất"):
         st.switch_page("loginpage.py")
-st.title("📚 Quản lý danh sách đề cương")
+st.title("📚 Admin - Dashboard")
 
 # ========== CHỌN CHƯƠNG TRÌNH ĐÀO TẠO ==========
-st.subheader("📘 Chọn Chương trình đào tạo")
+st.subheader("📘 Quản lý Đề cương")
 
 he = st.selectbox("Hệ đào tạo", ["(chọn option)", "Tiến sĩ", "Thạc sĩ", "Đại học"])
 khoa = st.selectbox("Khóa học", ["(chọn option)", "21", "23", "25"])

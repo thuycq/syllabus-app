@@ -34,7 +34,7 @@ with col1:
             st.session_state.logged_in = True
             st.session_state.role = "admin"
             st.success("✅ Đăng nhập thành công!")
-            st.switch_page("pages/2_adminpage.py")
+            st.switch_page("pages/2_admin_page.py")
         else:
             st.error("❌ Sai tài khoản hoặc mật khẩu.")
 
