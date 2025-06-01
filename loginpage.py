@@ -1,4 +1,7 @@
 import streamlit as st
+from utils import setup_page
+
+setup_page("Syllabus App - Đăng nhập", "📚")
 
 # Cấu hình giao diện chính
 st.set_page_config(

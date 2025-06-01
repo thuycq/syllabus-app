@@ -10,7 +10,7 @@ import os
 import pandas as pd
 from utils import setup_page
 
-setup_page("Syllabus App - Syllabus", "📚")
+setup_page("Syllabus App - Soạn đề cương", "📚")
 
 
 # Tải ảnh logo từ Google Drive
