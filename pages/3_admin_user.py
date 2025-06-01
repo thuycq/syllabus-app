@@ -31,12 +31,23 @@ st.subheader("📋 Danh sách tài khoản")
 if users:
     emails_to_delete = []
     for i, (email, info) in enumerate(users.items()):
-        col1, col2, col3 = st.columns([5, 4, 1])
+        col1, col2, col3, col4 = st.columns([3, 3, 1, 1])
         with col1:
             st.write(email)
         with col2:
-            st.write(f"🔑 {info.get('password', '')}")
+            new_pass = st.text_input(
+                "🔑 Mật khẩu", 
+                value=info.get('password', ''), 
+                key=f"edit_pass_{i}", 
+                type="password"
+            )
         with col3:
+            if st.button("💾 Lưu", key=f"save_{i}"):
+                users[email]["password"] = new_pass
+                save_users(users)
+                st.success(f"✅ Đã cập nhật mật khẩu cho {email}.")
+                st.rerun()
+        with col4:
             if st.button("🗑️", key=f"delete_{i}"):
                 emails_to_delete.append(email)
 
