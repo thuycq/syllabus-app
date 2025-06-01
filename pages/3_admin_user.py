@@ -35,7 +35,7 @@ st.subheader("📋 Danh sách tài khoản")
 if users:
     emails_to_delete = []
     for i, (email, info) in enumerate(users.items()):
-        col1, col2, col3, col4 = st.columns([3, 3, 1, 1])
+        col1, col2, col3, col4 = st.columns([3, 5, 1, 1])
         with col1:
             st.write(email)
         with col2:
