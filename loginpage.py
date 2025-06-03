@@ -40,10 +40,10 @@ st.markdown(
 )
 
 # --- Xử lý nút login ---
-if login_type == "Admin":
+if login_type == "🛠️ Admin":
     if st.button("Login"):
         st.switch_page("pages/1_admin_login.py")
-elif login_type == "Giảng viên":
+elif login_type == "🎓Giảng viên":
     if st.button("Login"):
         st.switch_page("pages/1_gv_login.py")
 
