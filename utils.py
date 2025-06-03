@@ -5,7 +5,13 @@ import datetime
 
 # --- Setup Page ---
 def setup_page(title, icon):
-    st.set_page_config(page_title=title, page_icon=icon)
+    st.set_page_config(
+        page_title=title,
+        page_icon=icon,
+        layout="wide",  # Cho trang rộng đẹp
+        initial_sidebar_state="collapsed"  # Ẩn sidebar mặc định
+    )
+
 
 # --- Format date to string (dùng khi xuất file Word) ---
 def format_date(date_obj):
