@@ -71,11 +71,11 @@ if da_chon_day_du:
     st.markdown("### 📋 Lấy danh sách đề cương cho CTĐT")
 
     try:
-        file_name_drive = f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx"
+        file_name_drive = f"Import_{he}_{khoa}_{ctdt}.xlsx"
         df_drive = download_syllabus_list_from_drive(file_name_drive)
         
         st.dataframe(df_drive, use_container_width=True)
-        st.success("✅ Đã tải danh sách đề cương từ Drive.")
+        st.success("✅ Đã tải danh sách đề cương")
     except Exception as e:
         st.error(f"❌ Chưa có danh sách đề cương")
 
@@ -104,7 +104,7 @@ if st.session_state.get("show_table_flag", False):
             file_name=file_name_drive
         )
 
-        st.success(f"✅ Đã cập nhật danh sách đề cương lên Google Drive: [Mở file trên Drive]({drive_link})")
+        st.success(f"✅ Đã cập nhật danh sách đề cương)")
 
 
 # ========== FILE MẪU EXCEL ==========
@@ -147,7 +147,7 @@ if da_chon_day_du:
             st.success("✅ Đã đọc thành công file Excel. Bạn có thể chỉnh trực tiếp bên dưới:")
 
         except Exception as e:
-            st.error(f"❌ Lỗi khi đọc file Excel: {e}")
+            st.error(f"❌ Lỗi khi đọc file Excel")
 
     if "df_import" in st.session_state:
         st.session_state["df_import"] = st.data_editor(
@@ -161,15 +161,15 @@ if da_chon_day_du:
         )
 
         if st.button("💾 Lưu & Upload lên Drive"):
-            file_name_drive = f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx"
+            file_name_drive = f"Import_{he}_{khoa}_{ctdt}.xlsx"
             try:
                 drive_link = upload_syllabus_list_to_drive(
                     st.session_state["df_import"],
                     file_name=file_name_drive
                 )
-                st.success(f"✅ Đã upload danh sách đề cương lên Google Drive: [Mở file trên Drive]({drive_link})")
+                st.success(f"✅ Đã upload danh sách đề cương)")
             except Exception as e:
-                st.error(f"❌ Lỗi khi upload danh sách lên Drive: {e}")
+                st.error(f"❌ Lỗi khi upload danh sách")
 
 # ========== QUẢN LÝ TÀI KHOẢN ==========
 st.markdown("---")
