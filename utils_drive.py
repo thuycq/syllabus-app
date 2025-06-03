@@ -4,38 +4,67 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
-# ID của folder Drive
-FOLDER_ID = '1vtziPO7_zj7-JJlnxOqP568NV_nP1sK7'
+# ID của folder gốc trên Drive
+ROOT_FOLDER_ID = '1vtziPO7_zj7-JJlnxOqP568NV_nP1sK7'
 
 def create_drive_service():
     SCOPES = ['https://www.googleapis.com/auth/drive']
 
-    # Kiểm tra có biến môi trường không
     json_content = os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON")
     if json_content:
-        # Nếu chạy trên Streamlit Cloud
         info = json.loads(json_content)
-        creds = service_account.Credentials.from_service_account_info(
-            info, scopes=SCOPES
-        )
+        creds = service_account.Credentials.from_service_account_info(info, scopes=SCOPES)
     else:
-        # Nếu chạy LOCAL → dùng file
         LOCAL_JSON_PATH = 'syllabus-app-drive-api.json'
-        creds = service_account.Credentials.from_service_account_file(
-            LOCAL_JSON_PATH, scopes=SCOPES
-        )
+        creds = service_account.Credentials.from_service_account_file(LOCAL_JSON_PATH, scopes=SCOPES)
 
     service = build('drive', 'v3', credentials=creds)
     return service
 
-def upload_file_to_drive(filename, filepath, mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document'):
+def get_or_create_folder(parent_id, folder_name):
     service = create_drive_service()
 
+    # Tìm folder có sẵn
+    query = f"'{parent_id}' in parents and name = '{folder_name}' and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
+    results = service.files().list(q=query, fields="files(id, name)").execute()
+    items = results.get('files', [])
+
+    if items:
+        # Nếu có rồi → trả về ID
+        folder_id = items[0]['id']
+    else:
+        # Nếu chưa có → tạo mới
+        file_metadata = {
+            'name': folder_name,
+            'mimeType': 'application/vnd.google-apps.folder',
+            'parents': [parent_id]
+        }
+        file = service.files().create(body=file_metadata, fields='id').execute()
+        folder_id = file.get('id')
+
+    return folder_id
+
+def upload_file_to_drive(full_file_path, trinh_do, khoa_hoc, ctdt_folder):
+    service = create_drive_service()
+
+    # Tạo cây folder giống local
+    trinh_do_folder = ""
+    if trinh_do.lower() == "đại học":
+        trinh_do_folder = "daihoc"
+    elif trinh_do.lower() == "thạc sĩ":
+        trinh_do_folder = "thacsi"
+
+    # Build cây folder
+    folder_id_level1 = get_or_create_folder(ROOT_FOLDER_ID, trinh_do_folder)
+    folder_id_level2 = get_or_create_folder(folder_id_level1, f"khoa{khoa_hoc}")
+    folder_id_level3 = get_or_create_folder(folder_id_level2, ctdt_folder.strip().lower())
+
+    # Upload file vào đúng folder
     file_metadata = {
-        'name': filename,
-        'parents': [FOLDER_ID]
+        'name': os.path.basename(full_file_path),
+        'parents': [folder_id_level3]
     }
-    media = MediaFileUpload(filepath, mimetype=mimetype)
+    media = MediaFileUpload(full_file_path, mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
 
     file = service.files().create(
         body=file_metadata,
