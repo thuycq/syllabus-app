@@ -5,7 +5,7 @@ setup_page("Syllabus App - Đăng nhập", "📚")
 
 # --- HEADER đẹp ---
 col1, col2, col3 = st.columns([1, 8, 8])
-with col1:
+with col2:
     st.markdown(
         """
         <div style="font-size: 28px; font-weight: bold; color: #003399;">
@@ -14,7 +14,7 @@ with col1:
         """,
         unsafe_allow_html=True
     )
-with col2:
+with col1:
     st.image("logo_temp.png", width=80)
 
 #---Phần đưang nhập---
