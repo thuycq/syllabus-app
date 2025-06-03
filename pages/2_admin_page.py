@@ -84,7 +84,7 @@ if da_chon_day_du:
         st.session_state["show_table_flag"] = True
 
     except Exception as e:
-        st.error(f"❌ Chưa có danh sách đề cương.")
+        st.error(f"❌ Chưa có danh sách đề cương. Lỗi: {e}")
         # Tắt flag nếu lỗi
         st.session_state["show_table_flag"] = False
 
@@ -167,7 +167,7 @@ if da_chon_day_du:
             use_container_width=True
         )
 
-        if st.button("💾 Lưu & Upload lên Drive (từ file import)"):
+        if st.button("💾 Lưu & Upload lại (từ danh sách đã load từ Drive)"):
             try:
                 drive_link = upload_syllabus_list_to_drive(
                     st.session_state["df_import"],
