@@ -4,7 +4,7 @@ from utils import setup_page
 setup_page("Syllabus App - Đăng nhập", "📚")
 
 # --- HEADER đẹp ---
-col1, col2 = st.columns([8, 1])
+col1, col2, col3 = st.columns([1, 8, 8])
 with col1:
     st.markdown(
         """
