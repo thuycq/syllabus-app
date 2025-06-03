@@ -37,31 +37,23 @@ with tabs[0]:  # 1. Thông tin tổng quát
     col1, col2 = st.columns(2)
     with col1:
         ten_tv = st.text_input("Tên học phần (tiếng Việt)")
+        ten_ta = st.text_input("Tên học phần (tiếng Anh)")
         ma_mh = st.text_input("Mã học phần")
+        thuoc_kien_thuc = st.selectbox("Thuộc kiến thức", [
+            "Kiến thức đại cương", "Kiến thức cơ sở ngành", "Kiến thức ngành", "Kiến thức chuyên ngành"
+        ])
+        loai_mon = st.selectbox("Loại môn", ["Bắt buộc", "Tự chọn"])
+        trinh_do = st.selectbox(
+            "Trình độ", 
+            ["Đại học", "Thạc sĩ"],
+        )
         nganh_hoc = st.text_input("Ngành học")
         so_tc = st.text_input("Số tín chỉ")
         so_tiet_lt = st.text_input("Số tiết lý thuyết", value="45")
         so_tiet_th = st.text_input("Số tiết thực hành", value="0")
         so_gio_tuhoc = st.text_input("Số giờ tự học", value="135")
-        mon_hoc_truoc = st.text_input("Môn học trước", value="Không")
-        mon_hoc_sau = st.text_input("Môn học sau", value="Không")
-        mon_hoc_tien_quyet = st.text_input("Môn học tiên quyết", value="Không")
-        mon_hoc_song_hanh = st.text_input("Môn học song hành", value="Không")
-    with col2:
-        ten_ta = st.text_input("Tên học phần (tiếng Anh)")
-        trinh_do = st.selectbox(
-            "Trình độ", 
-            ["Đại học", "Thạc sĩ"],
-        )
-        thuoc_kien_thuc = st.selectbox("Thuộc kiến thức", [
-            "Kiến thức đại cương", "Kiến thức cơ sở ngành", "Kiến thức ngành", "Kiến thức chuyên ngành"
-        ])
-        loai_mon = st.selectbox("Loại môn", ["Bắt buộc", "Tự chọn"])
-        ngon_ngu = st.text_input("Ngôn ngữ giảng dạy", "Tiếng Việt")
-        giang_vien = st.text_input("Giảng viên phụ trách")
-        tro_giang = st.text_input("Giảng viên trợ giảng")
-        nam_hoc = st.text_input("Năm học")
-        hoc_ky = st.text_input("Học kỳ")
+        
+    with col2:       
         if trinh_do == "Thạc sĩ":
             khoa_hoc = st.selectbox(
                 "Khóa học", 
@@ -98,6 +90,15 @@ with tabs[0]:  # 1. Thông tin tổng quát
             "Chương trình đào tạo (CTĐT)", 
             ctdt_options,
         )
+        mon_hoc_truoc = st.text_input("Môn học trước", value="Không")
+        mon_hoc_sau = st.text_input("Môn học sau", value="Không")
+        mon_hoc_tien_quyet = st.text_input("Môn học tiên quyết", value="Không")
+        mon_hoc_song_hanh = st.text_input("Môn học song hành", value="Không")    
+        ngon_ngu = st.text_input("Ngôn ngữ giảng dạy", "Tiếng Việt")
+        giang_vien = st.text_input("Giảng viên phụ trách")
+        tro_giang = st.text_input("Giảng viên trợ giảng")
+        nam_hoc = st.text_input("Năm học")
+        hoc_ky = st.text_input("Học kỳ")
 
 
 # --- 2+3. Mô tả & Tài liệu ---
