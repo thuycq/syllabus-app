@@ -22,8 +22,8 @@ if "role" not in st.session_state:
 
 st.title("🔐 Đăng nhập")
 
-username = st.text_input("Tên đăng nhập", placeholder="admin")
-password = st.text_input("Mật khẩu", type="password")
+username = st.text_input(placeholder="Username")
+password = st.text_input(placeholder="Password", type="password")
 
 col1, col2 = st.columns([1, 1])
 
