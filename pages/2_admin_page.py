@@ -142,26 +142,34 @@ if da_chon_day_du:
     if uploaded_file is not None:
         try:
             df_import = pd.read_excel(uploaded_file, engine='openpyxl')
+            st.session_state["df_import"] = df_import  # SAVE vào session
+
             st.success("✅ Đã đọc thành công file Excel. Bạn có thể chỉnh trực tiếp bên dưới:")
 
-            df_import = st.data_editor(
-                df_import,
-                column_config={
-                    "Mã HP": st.column_config.TextColumn("Mã HP"),
-                    "Tên HP": st.column_config.TextColumn("Tên HP"),
-                    "Tên GV soạn": st.column_config.TextColumn("Tên GV soạn"),
-                },
-                use_container_width=True
-            )
-
-            # Nút Lưu & Upload
-            if st.button("💾 Lưu & Upload"):
-                file_name_drive = f"Import_{he}_{khoa}_{ctdt}.xlsx"
-                drive_link = upload_syllabus_list_to_drive(df_import, file_name=file_name_drive)
-                st.success(f"✅ Đã upload danh sách đề cương)")
-
         except Exception as e:
-            st.error(f"❌ Lỗi khi đọc file Excel")
+            st.error(f"❌ Lỗi khi đọc file Excel: {e}")
+
+    if "df_import" in st.session_state:
+        st.session_state["df_import"] = st.data_editor(
+            st.session_state["df_import"],
+            column_config={
+                "Mã HP": st.column_config.TextColumn("Mã HP"),
+                "Tên HP": st.column_config.TextColumn("Tên HP"),
+                "Tên GV soạn": st.column_config.TextColumn("Tên GV soạn"),
+            },
+            use_container_width=True
+        )
+
+        if st.button("💾 Lưu & Upload lên Drive"):
+            file_name_drive = f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx"
+            try:
+                drive_link = upload_syllabus_list_to_drive(
+                    st.session_state["df_import"],
+                    file_name=file_name_drive
+                )
+                st.success(f"✅ Đã upload danh sách đề cương lên Google Drive: [Mở file trên Drive]({drive_link})")
+            except Exception as e:
+                st.error(f"❌ Lỗi khi upload danh sách lên Drive: {e}")
 
 # ========== QUẢN LÝ TÀI KHOẢN ==========
 st.markdown("---")
