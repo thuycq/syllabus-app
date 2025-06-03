@@ -677,6 +677,7 @@ with col1:
 
 # --- Nút Lưu và quay lại ---
 with col2:
+    st.warning("📌 Hãy lưu ý nhập đầy đủ Tên MH, Mã HP, Khóa học và Tên CTĐT trước khi Lưu!")
     if st.button("💾 Lưu và quay lại"):
         if not ma_mh or not ten_tv or not khoa_hoc:
             st.error("⚠️ Bạn phải nhập đầy đủ Mã HP, Tên HP và Khóa học trước khi lưu.")
