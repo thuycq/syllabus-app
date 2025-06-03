@@ -62,11 +62,11 @@ syllabus_folder = "syllabus"
 # Hàng nút chức năng
 col_btn1, col_btn2 = st.columns([1, 1])
 
-with col_btn2:
+with col_btn1:
     #if st.button("📋 Xuất danh sách môn học"):
         show_subjects = True
 
-with col_btn1:
+with col_btn2:
     if st.button("📝 Soạn mới đề cương"):
         st.switch_page("pages/4_gv_Syllabus_Create.py")
 
