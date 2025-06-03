@@ -79,9 +79,10 @@ if da_chon_day_du:
         st.error(f"❌ Lỗi khi tải danh sách đề cương từ Drive: {e}")
 
 
-# Hiển thị bảng nếu có flag
 if st.session_state.get("show_table_flag", False):
-    #st.markdown("### ✏️ Chỉnh sửa danh sách đề cương (có thể chỉnh 'Mã HP')")
+    #st.markdown("### ✏️ Chỉnh sửa danh sách đề cương")
+
+    # CHO PHÉP CHỈNH TRỰC TIẾP
     st.session_state["edited_df_existing"] = st.data_editor(
         st.session_state["edited_df_existing"],
         column_config={
@@ -92,11 +93,17 @@ if st.session_state.get("show_table_flag", False):
         use_container_width=True
     )
 
-    # Nút Lưu
+    # Nút Lưu & Upload lại Drive
     if st.button("💾 Lưu"):
-        file_path = os.path.join("syllabus list", f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx")
-        st.session_state["edited_df_existing"].to_excel(file_path, index=False, engine='openpyxl')
-        st.success(f"✅ Đã lưu danh sách sau chỉnh sửa: {os.path.basename(file_path)}")
+        file_name_drive = f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx"
+        from utils_drive import upload_syllabus_list_to_drive
+
+        drive_link = upload_syllabus_list_to_drive(
+            st.session_state["edited_df_existing"],
+            file_name=file_name_drive
+        )
+
+        st.success(f"✅ Đã cập nhật danh sách đề cương lên Google Drive: [Mở file trên Drive]({drive_link})")
 
 
 # ========== FILE MẪU EXCEL ==========
