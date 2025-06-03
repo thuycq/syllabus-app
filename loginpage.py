@@ -21,7 +21,7 @@ with col1:
 st.markdown("<hr style='margin-top: 10px; margin-bottom: 20px;'>", unsafe_allow_html=True)
 st.title("🔐 Đăng nhập")
 
-login_type = st.radio(["🛠️ Admin", "🎓Giảng viên"], horizontal=True)
+login_type = st.radio("",["🛠️ Admin", "🎓Giảng viên"], horizontal=True)
 
 # --- CSS cho button đẹp ---
 st.markdown(
