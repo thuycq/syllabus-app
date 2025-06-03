@@ -18,7 +18,18 @@ with col1:
     st.image("logo_temp.png", width=80)
 
 #---Phần đăng nhập---
-st.markdown("<hr style='margin-top: 5px; margin-bottom: 7px;'>", unsafe_allow_html=True)
+st.markdown(
+    """
+    <div style="
+        border: 1px solid #ccc; 
+        border-radius: 8px; 
+        padding: 20px; 
+        background-color: #f9f9f9;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+    ">
+    """, 
+    unsafe_allow_html=True
+)
 st.title("🔐 Đăng nhập")
 
 login_type = st.radio(
@@ -59,4 +70,4 @@ hide_streamlit_style = """
         [data-testid="stSidebar"] {display: none;}
         </style>
         """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+st.markdown("</div>", unsafe_allow_html=True)
