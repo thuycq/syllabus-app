@@ -79,14 +79,12 @@ with tabs[0]:  # 1. Thông tin tổng quát
                 ]
             else:
                 ctdt_options = []
+        nam_hoc = st.text_input("Năm học")
+        hoc_ky = st.text_input("Học kỳ")
         ctdt = st.selectbox(
             "Chương trình đào tạo (CTĐT)", 
             ctdt_options,
-        )
-        nam_hoc = st.text_input("Năm học")
-        hoc_ky = st.text_input("Học kỳ")
-        
-        
+        )        
     with col2:       
         so_tc = st.text_input("Số tín chỉ")
         so_tiet_lt = st.text_input("Số tiết lý thuyết", value="45")
@@ -630,7 +628,7 @@ col1, col2 = st.columns(2)
 with col1:
     if st.button("📄 Lưu và Xuất file"):
         if not ma_mh or not ten_tv or not khoa_hoc:
-            st.error("⚠️ Bạn phải nhập đầy đủ Mã HP, Tên HP và Khóa trước khi lưu.")
+            st.error("⚠️ Bạn phải nhập đầy đủ Mã HP, Tên HP và Khóa học trước khi lưu.")
         else:
             file_path = export_syllabus_to_word(
                 muc_tieu_data,
@@ -666,7 +664,7 @@ with col1:
 with col2:
     if st.button("💾 Lưu và quay lại"):
         if not ma_mh or not ten_tv or not khoa_hoc:
-            st.error("⚠️ Bạn phải nhập đầy đủ Mã HP, Tên HP và Khóa trước khi lưu.")
+            st.error("⚠️ Bạn phải nhập đầy đủ Mã HP, Tên HP và Khóa học trước khi lưu.")
         else:
             file_path = export_syllabus_to_word(
                 muc_tieu_data,
