@@ -76,30 +76,30 @@ def upload_file_to_drive(full_file_path, trinh_do, khoa_hoc, ctdt_folder):
     print(f"View link: {file.get('webViewLink')}")
     return file.get('webViewLink')
 
-def upload_syllabus_list_to_drive(df_syllabus_list, file_name="syllabus_list.xlsx"):
+def download_syllabus_list_from_drive(file_name):
     service = create_drive_service()
-
-    # ID của folder Syllabus List
     ROOT_FOLDER_ID_SYLLABUS_LIST = "ID_FOLDER_SYLLABUS_LIST"
 
-    # Tạm lưu file Excel ra file tạm (không cần lưu local app)
-    temp_file = "/tmp/" + file_name  # trên Streamlit Cloud
+    query = f"'{ROOT_FOLDER_ID_SYLLABUS_LIST}' in parents and name = '{file_name}' and trashed = false"
+    results = service.files().list(q=query, fields="files(id, name)").execute()
+    items = results.get('files', [])
 
-    # Lưu DataFrame ra file tạm
-    df_syllabus_list.to_excel(temp_file, index=False)
+    if not items:
+        raise Exception("Không tìm thấy file trên Drive.")
 
-    # Upload lên Drive
-    file_metadata = {
-        'name': file_name,
-        'parents': [195bgTXhDa8xROajb-MUYNtYzGUbk2VlY]
-    }
-    media = MediaFileUpload(temp_file, mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    file_id = items[0]['id']
 
-    file = service.files().create(
-        body=file_metadata,
-        media_body=media,
-        fields='id, name, webViewLink'
-    ).execute()
+    # Tải file về dạng bytes
+    from googleapiclient.http import MediaIoBaseDownload
+    import io
 
-    print(f"Uploaded Syllabus List: {file.get('name')} (ID: {file.get('id')})")
-    return file.get('webViewLink')
+    request = service.files().get_media(fileId=file_id)
+    fh = io.BytesIO()
+    downloader = MediaIoBaseDownload(fh, request)
+    done = False
+    while not done:
+        status, done = downloader.next_chunk()
+
+    fh.seek(0)
+    df = pd.read_excel(fh, engine='openpyxl')
+    return df
