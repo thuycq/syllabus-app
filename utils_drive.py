@@ -43,7 +43,7 @@ def get_or_create_folder(parent_id, folder_name):
         folder_id = file.get('id')
 
     return folder_id
-
+#---Lưu list lên drive---
 def upload_file_to_drive(full_file_path, trinh_do, khoa_hoc, ctdt_folder):
     service = create_drive_service()
 
@@ -74,4 +74,32 @@ def upload_file_to_drive(full_file_path, trinh_do, khoa_hoc, ctdt_folder):
 
     print(f"Uploaded file: {file.get('name')} (ID: {file.get('id')})")
     print(f"View link: {file.get('webViewLink')}")
+    return file.get('webViewLink')
+
+def upload_syllabus_list_to_drive(df_syllabus_list, file_name="syllabus_list.xlsx"):
+    service = create_drive_service()
+
+    # ID của folder Syllabus List
+    ROOT_FOLDER_ID_SYLLABUS_LIST = "ID_FOLDER_SYLLABUS_LIST"
+
+    # Tạm lưu file Excel ra file tạm (không cần lưu local app)
+    temp_file = "/tmp/" + file_name  # trên Streamlit Cloud
+
+    # Lưu DataFrame ra file tạm
+    df_syllabus_list.to_excel(temp_file, index=False)
+
+    # Upload lên Drive
+    file_metadata = {
+        'name': file_name,
+        'parents': [195bgTXhDa8xROajb-MUYNtYzGUbk2VlY]
+    }
+    media = MediaFileUpload(temp_file, mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+    file = service.files().create(
+        body=file_metadata,
+        media_body=media,
+        fields='id, name, webViewLink'
+    ).execute()
+
+    print(f"Uploaded Syllabus List: {file.get('name')} (ID: {file.get('id')})")
     return file.get('webViewLink')
