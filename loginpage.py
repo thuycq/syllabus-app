@@ -11,7 +11,7 @@ st.markdown(
             📚 Hệ thống Quản lý Đề cương <br> Khoa Tài chính - Ngân hàng, UEL
         </div>
         <div>
-            <img src="https://drive.google.com/drive/folders/1I253CXTrMjo3ddShBMEQOlp9flc0mUP6" width="80">
+            <st.img="logo_temp.png", width="80">
         </div>
     </div>
     <hr style="margin-top: 10px; margin-bottom: 20px;">
