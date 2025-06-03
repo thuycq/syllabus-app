@@ -62,6 +62,8 @@ elif login_type == "🎓Giảng viên":
     if st.button("Login"):
         st.switch_page("pages/1_gv_login.py")
 
+st.markdown("</div>", unsafe_allow_html=True)
+
 hide_streamlit_style = """
         <style>
         #MainMenu {visibility: hidden;}
@@ -70,4 +72,4 @@ hide_streamlit_style = """
         [data-testid="stSidebar"] {display: none;}
         </style>
         """
-st.markdown("</div>", unsafe_allow_html=True)
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
