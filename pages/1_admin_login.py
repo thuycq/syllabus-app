@@ -20,7 +20,7 @@ if "logged_in" not in st.session_state:
 if "role" not in st.session_state:
     st.session_state.role = None
 
-st.title("🔐 Đăng nhập quản trị")
+st.title("🔐 Đăng nhập")
 
 username = st.text_input("Tên đăng nhập", placeholder="admin")
 password = st.text_input("Mật khẩu", type="password")
