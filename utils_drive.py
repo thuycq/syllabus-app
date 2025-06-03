@@ -3,6 +3,7 @@ import json
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
+import pandas as pd
 
 # ID của folder gốc trên Drive
 ROOT_FOLDER_ID = '1vtziPO7_zj7-JJlnxOqP568NV_nP1sK7'
