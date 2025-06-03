@@ -661,14 +661,16 @@ with col1:
                     mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                 )
 
-            # 3️⃣ Upload lên Google Drive
-            drive_link = upload_file_to_drive(
-                filename=os.path.basename(file_path),
-                filepath=file_path
-            )
-
-            # 4️⃣ Hiển thị link Drive
-            st.success(f"✅ File đã upload lên Google Drive: [Mở file trên Drive]({drive_link})")
+            # 3️⃣ Upload lên Google Drive — thêm try-except để chống lỗi
+            try:
+                drive_link = upload_file_to_drive(
+                    filename=os.path.basename(file_path),
+                    filepath=file_path
+                )
+                # 4️⃣ Hiển thị link Drive
+                st.success(f"✅ File đã upload lên Google Drive: [Mở file trên Drive]({drive_link})")
+            except Exception as e:
+                st.error(f"❌ Lỗi khi upload lên Google Drive: {e}")
 
 
 # Nút Lưu và quay lại
@@ -699,12 +701,13 @@ with col2:
             st.success(f"✅ Đã lưu đề cương: {os.path.basename(file_path)}")
             st.switch_page("pages/2_gv_page.py")
 
-            # 2️⃣ Upload lên Google Drive
-            drive_link = upload_file_to_drive(
-                filename=os.path.basename(file_path),
-                filepath=file_path
-            )
-
-            # 3️⃣ Thông báo + chuyển trang
-            st.success(f"✅ Đã lưu và upload đề cương: [Mở file trên Drive]({drive_link})")
-            st.switch_page("pages/2_gv_page.py")
+            # 3️⃣ Upload lên Google Drive — thêm try-except để chống lỗi
+            try:
+                drive_link = upload_file_to_drive(
+                    filename=os.path.basename(file_path),
+                    filepath=file_path
+                )
+                # 4️⃣ Hiển thị link Drive
+                st.success(f"✅ File đã upload lên Google Drive: [Mở file trên Drive]({drive_link})")
+            except Exception as e:
+                st.error(f"❌ Lỗi khi upload lên Google Drive: {e}")
