@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 from utils import setup_page
+from utils_drive import upload_syllabus_list_to_drive, download_syllabus_list_from_drive
 
 setup_page("Syllabus App - Admin", "📚")
 
@@ -64,17 +65,19 @@ if not da_chon_day_du:
 else:
     st.success(f"🎯 Đang chọn: {he} - Khóa {khoa} - {ctdt}")
 
-# ========== NÚT LẤY DANH SÁCH ĐỀ CƯƠNG ==========
+# ========== LẤY LIST HIỆN TRỰC TIẾP ==========
 if da_chon_day_du:
-    if st.button("📋 Lấy list đề cương cho CTĐT"):
-        file_path = os.path.join("syllabus list", f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx")
-        if os.path.exists(file_path):
-            st.session_state["edited_df_existing"] = pd.read_excel(file_path, engine="openpyxl")
-            st.session_state["show_table_flag"] = True
-            #st.success(f"✅ Đã tải danh sách đề cương: {os.path.basename(file_path)}")
-        else:
-            st.warning("⚠️ Chưa có danh sách đề cương cho CTĐT này.")
-            st.session_state["show_table_flag"] = False
+    st.markdown("### 📋 Lấy danh sách đề cương cho CTĐT")
+
+    try:
+        file_name_drive = f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx"
+        df_drive = download_syllabus_list_from_drive(file_name_drive)
+        
+        st.dataframe(df_drive, use_container_width=True)
+        st.success("✅ Đã tải danh sách đề cương từ Drive.")
+    except Exception as e:
+        st.error(f"❌ Lỗi khi tải danh sách đề cương từ Drive: {e}")
+
 
 # Hiển thị bảng nếu có flag
 if st.session_state.get("show_table_flag", False):
@@ -107,41 +110,45 @@ df_mau = pd.DataFrame({
     "Tên GV soạn": ["Nguyễn Văn A", "Trần Thị B"]
 })
 
-folder_path = "syllabus list"
-os.makedirs(folder_path, exist_ok=True)
+file_name_mau = f"Danh_sach_de_cuong_mau.xlsx"
 
-file_name = f"Danh sách đề cương mẫu.xlsx"
-file_path = os.path.join(folder_path, file_name)
-df_mau.to_excel(file_path, index=False, engine='openpyxl')
+with st.download_button(
+    label="⬇️ Tải file mẫu (.xlsx)",
+    data=df_mau.to_excel(index=False, engine='openpyxl'),
+    file_name=file_name_mau,
+    mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+):
+    pass
 
-with open(file_path, "rb") as f:
-    st.download_button(
-        label="⬇️ Tải file mẫu (.xlsx)",
-        data=f.read(),
-        file_name=file_name,
-        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    )
+# ========== IMPORT EXCEL & UPLOAD ==========
+if da_chon_day_du:
+    st.markdown("### 📤 Tải lên danh sách đề cương (.xlsx)")
 
-# ========== IMPORT EXCEL ==========
-uploaded_file = st.file_uploader("📤 Tải lên List đề cương (.xlsx)", type=["xlsx"])
+    uploaded_file = st.file_uploader("Chọn file để tải lên", type=["xlsx"])
 
-if uploaded_file is not None:
-    try:
-        df_import = pd.read_excel(uploaded_file, engine='openpyxl')
-        #st.success("✅ Đã đọc thành công file Excel.")
+    if uploaded_file is not None:
+        try:
+            df_import = pd.read_excel(uploaded_file, engine='openpyxl')
+            st.success("✅ Đã đọc thành công file Excel. Bạn có thể chỉnh trực tiếp bên dưới:")
 
-        # LƯU LUÔN FILE VÀO THƯ MỤC syllabus list
-        save_folder = "syllabus list"
-        os.makedirs(save_folder, exist_ok=True)
+            df_import = st.data_editor(
+                df_import,
+                column_config={
+                    "Mã HP": st.column_config.TextColumn("Mã HP"),
+                    "Tên HP": st.column_config.TextColumn("Tên HP"),
+                    "Tên GV soạn": st.column_config.TextColumn("Tên GV soạn"),
+                },
+                use_container_width=True
+            )
 
-        save_path = os.path.join(save_folder, f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx")
-        df_import.to_excel(save_path, index=False, engine='openpyxl')
+            # Nút Lưu & Upload
+            if st.button("💾 Lưu & Upload lên Drive"):
+                file_name_drive = f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx"
+                drive_link = upload_syllabus_list_to_drive(df_import, file_name=file_name_drive)
+                st.success(f"✅ Đã upload danh sách đề cương lên Google Drive: [Mở file trên Drive]({drive_link})")
 
-        st.success(f"✅ Đã lưu danh sách đề cương: {os.path.basename(save_path)}")
-
-    except Exception as e:
-        st.error(f"❌ Lỗi khi đọc file Excel: {e}")
-
+        except Exception as e:
+            st.error(f"❌ Lỗi khi đọc file Excel: {e}")
 
 # ========== QUẢN LÝ TÀI KHOẢN ==========
 st.markdown("---")
