@@ -70,20 +70,28 @@ else:
 if da_chon_day_du:
     st.markdown("### 📋 Lấy danh sách đề cương cho CTĐT")
 
+    # Đồng bộ tên file ở mọi chỗ
+    file_name_drive = f"Import_{he.replace(' ', '_')}_{khoa}_{ctdt.replace(' ', '_')}.xlsx"
+
     try:
-        file_name_drive = f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx"
         df_drive = download_syllabus_list_from_drive(file_name_drive)
-        
+
         st.dataframe(df_drive, use_container_width=True)
         st.success("✅ Đã tải danh sách đề cương từ Drive.")
+
+        # Bật flag để chỉnh trực tiếp
+        st.session_state["edited_df_existing"] = df_drive
+        st.session_state["show_table_flag"] = True
+
     except Exception as e:
-        st.error(f"❌ Chưa có danh sách đề cương")
+        st.error(f"❌ Chưa có danh sách đề cương.")
+        # Tắt flag nếu lỗi
+        st.session_state["show_table_flag"] = False
 
-
+# ========== CHỈNH TRỰC TIẾP sau khi LẤY LIST ==========
 if st.session_state.get("show_table_flag", False):
-    #st.markdown("### ✏️ Chỉnh sửa danh sách đề cương")
+    st.markdown("### ✏️ Chỉnh sửa danh sách đề cương (từ Drive)")
 
-    # CHO PHÉP CHỈNH TRỰC TIẾP
     st.session_state["edited_df_existing"] = st.data_editor(
         st.session_state["edited_df_existing"],
         column_config={
@@ -94,21 +102,19 @@ if st.session_state.get("show_table_flag", False):
         use_container_width=True
     )
 
-    # Nút Lưu & Upload lại Drive
-    if st.button("💾 Lưu"):
-        file_name_drive = f"Import_{he}_{khoa}_{ctdt}.xlsx"
-        from utils_drive import upload_syllabus_list_to_drive
+    if st.button("💾 Lưu & Upload lại danh sách lên Drive"):
+        # Đảm bảo dùng cùng 1 tên file
+        file_name_drive = f"Import_{he.replace(' ', '_')}_{khoa}_{ctdt.replace(' ', '_')}.xlsx"
 
         drive_link = upload_syllabus_list_to_drive(
             st.session_state["edited_df_existing"],
             file_name=file_name_drive
         )
-
         st.success(f"✅ Đã cập nhật danh sách đề cương lên Google Drive: [Mở file trên Drive]({drive_link})")
 
-
 # ========== FILE MẪU EXCEL ==========
-#st.markdown("### 📥 Tải file mẫu danh sách đề cương (.xlsx)")
+st.markdown("### 📥 Tải file mẫu danh sách đề cương (.xlsx)")
+
 df_mau = pd.DataFrame({
     "STT": [1, 2],
     "Mã HP": ["TC101", "CNTC202"],
@@ -160,8 +166,10 @@ if da_chon_day_du:
             use_container_width=True
         )
 
-        if st.button("💾 Lưu & Upload lên Drive"):
-            file_name_drive = f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx"
+        if st.button("💾 Lưu & Upload lên Drive (từ file import)"):
+            # Dùng tên file đồng bộ
+            file_name_drive = f"Import_{he.replace(' ', '_')}_{khoa}_{ctdt.replace(' ', '_')}.xlsx"
+
             try:
                 drive_link = upload_syllabus_list_to_drive(
                     st.session_state["df_import"],
