@@ -18,22 +18,10 @@ with col1:
     st.image("logo_temp.png", width=80)
 
 # --- Phần đăng nhập có khung viền ---
-st.markdown(
-    """
-    <div style="
-        border: 1px solid #ccc; 
-        border-radius: 8px; 
-        padding: 20px; 
-        background-color: #f9f9f9;
-        box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
-        margin-top: 20px;
-    ">
-    """, 
-    unsafe_allow_html=True
-)
+st.markdown("<hr style='margin-top: 1px; margin-bottom: 1px;'>", unsafe_allow_html=True)
 
 # Dùng markdown cho tiêu đề (để nằm trong khung)
-st.markdown("### 🔐 **Đăng nhập**")
+st.markdown("🔐 **Đăng nhập**")
 
 login_type = st.radio(
     label = "",
@@ -65,8 +53,6 @@ elif login_type == "🎓 Giảng viên":
     if st.button("Login"):
         st.switch_page("1_gv_login")
 
-# Đóng khung viền
-st.markdown("</div>", unsafe_allow_html=True)
 
 # Ẩn menu, sidebar, footer
 hide_streamlit_style = """
