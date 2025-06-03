@@ -66,52 +66,45 @@ if not da_chon_day_du:
 else:
     st.success(f"🎯 Đang chọn: {he} - Khóa {khoa} - {ctdt}")
 
- # ========== LẤY LIST HIỆN TRỰC TIẾP ==========
+# ========== LẤY LIST HIỆN TRỰC TIẾP ==========
 if da_chon_day_du:
     st.markdown("### 📋 Lấy danh sách đề cương cho CTĐT")
 
     try:
         file_name_drive = f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx"
         df_drive = download_syllabus_list_from_drive(file_name_drive)
-
+        
         st.dataframe(df_drive, use_container_width=True)
-        st.success("✅ Đã tải danh sách đề cương")
-
-        # Bật flag & lưu df vào session_state
-        st.session_state["edited_df_existing"] = df_drive
-        st.session_state["show_table_flag"] = True
-
+        st.success("✅ Đã tải danh sách đề cương từ Drive.")
     except Exception as e:
         st.error(f"❌ Chưa có danh sách đề cương")
-        # Tắt flag nếu lỗi
-        st.session_state["show_table_flag"] = False
 
-    # ========== CHỈNH TRỰC TIẾP ==========
-    if st.session_state.get("show_table_flag", False):
-        #st.markdown("### ✏️ Chỉnh sửa danh sách đề cương")
 
-        # CHO PHÉP CHỈNH TRỰC TIẾP
-        st.session_state["edited_df_existing"] = st.data_editor(
+if st.session_state.get("show_table_flag", False):
+    #st.markdown("### ✏️ Chỉnh sửa danh sách đề cương")
+
+    # CHO PHÉP CHỈNH TRỰC TIẾP
+    st.session_state["edited_df_existing"] = st.data_editor(
+        st.session_state["edited_df_existing"],
+        column_config={
+            "Mã HP": st.column_config.TextColumn("Mã HP"),
+            "Tên HP": st.column_config.TextColumn("Tên HP"),
+            "Tên GV soạn": st.column_config.TextColumn("Tên GV soạn"),
+        },
+        use_container_width=True
+    )
+
+    # Nút Lưu & Upload lại Drive
+    if st.button("💾 Lưu"):
+        file_name_drive = f"Import_{he}_{khoa}_{ctdt}.xlsx"
+        from utils_drive import upload_syllabus_list_to_drive
+
+        drive_link = upload_syllabus_list_to_drive(
             st.session_state["edited_df_existing"],
-            column_config={
-                "Mã HP": st.column_config.TextColumn("Mã HP"),
-                "Tên HP": st.column_config.TextColumn("Tên HP"),
-                "Tên GV soạn": st.column_config.TextColumn("Tên GV soạn"),
-            },
-            use_container_width=True
+            file_name=file_name_drive
         )
 
-        # Nút Lưu & Upload lại Drive
-        if st.button("💾 Lưu"):
-            file_name_drive = f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx"
-            from utils_drive import upload_syllabus_list_to_drive
-            drive_link = upload_syllabus_list_to_drive(
-                st.session_state["edited_df_existing"],
-                file_name=file_name_drive
-            )
-
-            st.success(f"✅ Đã cập nhật danh sách")
-✅ Tóm tắt chỉnh:
+        st.success(f"✅ Đã cập nhật danh sách đề cương lên Google Drive: [Mở file trên Drive]({drive_link})")
 
 
 # ========== FILE MẪU EXCEL ==========
@@ -154,7 +147,7 @@ if da_chon_day_du:
             st.success("✅ Đã đọc thành công file Excel. Bạn có thể chỉnh trực tiếp bên dưới:")
 
         except Exception as e:
-            st.error(f"❌ Lỗi khi đọc file Excel")
+            st.error(f"❌ Lỗi khi đọc file Excel: {e}")
 
     if "df_import" in st.session_state:
         st.session_state["df_import"] = st.data_editor(
@@ -174,9 +167,9 @@ if da_chon_day_du:
                     st.session_state["df_import"],
                     file_name=file_name_drive
                 )
-                st.success(f"✅ Đã upload danh sách đề cương)")
+                st.success(f"✅ Đã upload danh sách đề cương lên Google Drive: [Mở file trên Drive]({drive_link})")
             except Exception as e:
-                st.error(f"❌ Lỗi khi upload danh sách")
+                st.error(f"❌ Lỗi khi upload danh sách lên Drive: {e}")
 
 # ========== QUẢN LÝ TÀI KHOẢN ==========
 st.markdown("---")
