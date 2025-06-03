@@ -18,7 +18,7 @@ with col1:
     st.image("logo_temp.png", width=80)
 
 #---Phần đăng nhập---
-st.markdown("<hr style='margin-top: 10px; margin-bottom: 20px;'>", unsafe_allow_html=True)
+st.markdown("<hr style='margin-top: 5px; margin-bottom: 20px;'>", unsafe_allow_html=True)
 st.title("🔐 Đăng nhập")
 
 login_type = st.radio(
