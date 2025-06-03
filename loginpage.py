@@ -21,7 +21,7 @@ with col1:
 st.markdown("<hr style='margin-top: 10px; margin-bottom: 20px;'>", unsafe_allow_html=True)
 st.title("🔐 Đăng nhập")
 
-login_type = st.radio("Chọn vai trò", ["Admin", "Giảng viên"], horizontal=True)
+login_type = st.radio(["🛠️ Admin", "🎓Giảng viên"], horizontal=True)
 
 # --- CSS cho button đẹp ---
 st.markdown(
@@ -41,10 +41,10 @@ st.markdown(
 
 # --- Xử lý nút login ---
 if login_type == "Admin":
-    if st.button("Đăng nhập với tài khoản Admin"):
-        st.switch_page("pages/1_admin_login.py")  # KHÔNG có "pages/" ở đây
+    if st.button("Login"):
+        st.switch_page("pages/1_admin_login.py")
 elif login_type == "Giảng viên":
-    if st.button("Đăng nhập với Email UEL"):
+    if st.button("Login"):
         st.switch_page("pages/1_gv_login.py")
 
 hide_streamlit_style = """
