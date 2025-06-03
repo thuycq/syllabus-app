@@ -11,6 +11,7 @@ import pandas as pd
 from utils import setup_page
 from pydrive2.auth import GoogleAuth
 from pydrive2.drive import GoogleDrive
+from utils_drive import upload_file_to_drive
 
 setup_page("Syllabus App - Soạn đề cương", "📚")
 
