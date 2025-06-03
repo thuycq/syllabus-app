@@ -48,12 +48,6 @@ with tabs[0]:  # 1. Thông tin tổng quát
             ["Đại học", "Thạc sĩ"],
         )
         nganh_hoc = st.text_input("Ngành học")
-        so_tc = st.text_input("Số tín chỉ")
-        so_tiet_lt = st.text_input("Số tiết lý thuyết", value="45")
-        so_tiet_th = st.text_input("Số tiết thực hành", value="0")
-        so_gio_tuhoc = st.text_input("Số giờ tự học", value="135")
-        
-    with col2:       
         if trinh_do == "Thạc sĩ":
             khoa_hoc = st.selectbox(
                 "Khóa học", 
@@ -85,11 +79,19 @@ with tabs[0]:  # 1. Thông tin tổng quát
                 ]
             else:
                 ctdt_options = []
-
         ctdt = st.selectbox(
             "Chương trình đào tạo (CTĐT)", 
             ctdt_options,
         )
+        nam_hoc = st.text_input("Năm học")
+        hoc_ky = st.text_input("Học kỳ")
+        
+        
+    with col2:       
+        so_tc = st.text_input("Số tín chỉ")
+        so_tiet_lt = st.text_input("Số tiết lý thuyết", value="45")
+        so_tiet_th = st.text_input("Số tiết thực hành", value="0")
+        so_gio_tuhoc = st.text_input("Số giờ tự học", value="135")
         mon_hoc_truoc = st.text_input("Môn học trước", value="Không")
         mon_hoc_sau = st.text_input("Môn học sau", value="Không")
         mon_hoc_tien_quyet = st.text_input("Môn học tiên quyết", value="Không")
@@ -97,8 +99,7 @@ with tabs[0]:  # 1. Thông tin tổng quát
         ngon_ngu = st.text_input("Ngôn ngữ giảng dạy", "Tiếng Việt")
         giang_vien = st.text_input("Giảng viên phụ trách")
         tro_giang = st.text_input("Giảng viên trợ giảng")
-        nam_hoc = st.text_input("Năm học")
-        hoc_ky = st.text_input("Học kỳ")
+        
 
 
 # --- 2+3. Mô tả & Tài liệu ---
