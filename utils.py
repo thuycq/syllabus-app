@@ -1,23 +1,37 @@
-# utils.py
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaFileUpload
 
-import streamlit as st
+# Đường dẫn file JSON service account
+SERVICE_ACCOUNT_FILE = 'syllabus-app-drive-api.json'
 
-def setup_page(title="Syllabus App", icon="📚"):
-    # Cấu hình page
-    st.set_page_config(
-        page_title=title,
-        page_icon=icon,
-        layout="wide",
-        initial_sidebar_state="collapsed"
-    )
+# ID của folder Drive đích
+FOLDER_ID = '1vtziPO7_zj7-JJlnxOqP568NV_nP1sK7'
 
-    # CSS ẩn sidebar + header + footer + menu
-    hide_streamlit_style = """
-        <style>
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-        header {visibility: hidden;}
-        [data-testid="stSidebar"] {display: none;}
-        </style>
-    """
-    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+# Tạo service kết nối Drive API
+def create_drive_service():
+    SCOPES = ['https://www.googleapis.com/auth/drive']
+    creds = service_account.Credentials.from_service_account_file(
+        SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    service = build('drive', 'v3', credentials=creds)
+    return service
+
+# Upload file lên Drive
+def upload_file_to_drive(filename, filepath, mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document'):
+    service = create_drive_service()
+
+    file_metadata = {
+        'name': filename,
+        'parents': [FOLDER_ID]
+    }
+    media = MediaFileUpload(filepath, mimetype=mimetype)
+
+    file = service.files().create(
+        body=file_metadata,
+        media_body=media,
+        fields='id, name, webViewLink'
+    ).execute()
+
+    print(f"Uploaded file: {file.get('name')} (ID: {file.get('id')})")
+    print(f"View link: {file.get('webViewLink')}")
+    return file.get('webViewLink')
