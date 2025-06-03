@@ -78,7 +78,7 @@ def upload_file_to_drive(full_file_path, trinh_do, khoa_hoc, ctdt_folder):
 
 def download_syllabus_list_from_drive(file_name):
     service = create_drive_service()
-    ROOT_FOLDER_ID_SYLLABUS_LIST = "ID_FOLDER_SYLLABUS_LIST"
+    ROOT_FOLDER_ID_SYLLABUS_LIST = "195bgTXhDa8xROajb-MUYNtYzGUbk2VlY"
 
     query = f"'{ROOT_FOLDER_ID_SYLLABUS_LIST}' in parents and name = '{file_name}' and trashed = false"
     results = service.files().list(q=query, fields="files(id, name)").execute()
@@ -108,7 +108,7 @@ def upload_syllabus_list_to_drive(df_syllabus_list, file_name="syllabus_list.xls
     service = create_drive_service()
 
     # ID của folder Syllabus List
-    ROOT_FOLDER_ID_SYLLABUS_LIST = "ID_FOLDER_SYLLABUS_LIST"
+    ROOT_FOLDER_ID_SYLLABUS_LIST = "195bgTXhDa8xROajb-MUYNtYzGUbk2VlY"
 
     # Tạm lưu file Excel ra file tạm (không lưu local app)
     temp_file = "/tmp/" + file_name  # trên Streamlit Cloud
