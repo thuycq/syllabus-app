@@ -18,10 +18,9 @@ with col1:
     st.image("logo_temp.png", width=80)
 
 # --- Phần đăng nhập có khung viền ---
-st.markdown("<hr style='margin-top: 1px; margin-bottom: 1px;'>", unsafe_allow_html=True)
+st.markdown("<hr style='margin-top: 5px; margin-bottom: 7px;'>", unsafe_allow_html=True)
 
-# Dùng markdown cho tiêu đề (để nằm trong khung)
-st.markdown("🔐 **Đăng nhập**")
+st.title("🔐 Đăng nhập")
 
 login_type = st.radio(
     label = "",
