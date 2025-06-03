@@ -626,6 +626,8 @@ def export_syllabus_to_word(
 # --- Export Button ---
 col1, col2 = st.columns(2)
 
+from utils_drive import upload_file_to_drive  # nhớ import đúng
+
 with col1:
     if st.button("📄 Lưu và Xuất file"):
         if not ma_mh or not ten_tv or not khoa_hoc:
@@ -650,7 +652,6 @@ with col1:
                 ten_tv,
                 khoa_hoc
             )
-            #st.success(f"✅ Đã lưu đề cương: {os.path.basename(file_path)}")
 
             # 👉 Thêm nút Tải xuống:
             with open(file_path, "rb") as f:
@@ -661,7 +662,7 @@ with col1:
                     mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                 )
 
-            # 3️⃣ Upload lên Google Drive — thêm try-except để chống lỗi
+            # 3️⃣ Upload lên Google Drive — CHUẨN CÁCH 2
             try:
                 drive_link = upload_file_to_drive(
                     full_file_path=file_path,
@@ -674,8 +675,7 @@ with col1:
             except Exception as e:
                 st.error(f"❌ Lỗi khi upload lên Google Drive: {e}")
 
-
-# Nút Lưu và quay lại
+# --- Nút Lưu và quay lại ---
 with col2:
     if st.button("💾 Lưu và quay lại"):
         if not ma_mh or not ten_tv or not khoa_hoc:
@@ -701,9 +701,8 @@ with col2:
                 khoa_hoc
             )
             st.success(f"✅ Đã lưu đề cương: {os.path.basename(file_path)}")
-            st.switch_page("pages/2_gv_page.py")
 
-            # Upload lên Google Drive — thêm try-except để chống lỗi
+            # 3️⃣ Upload lên Google Drive — CHUẨN CÁCH 2
             try:
                 drive_link = upload_file_to_drive(
                     full_file_path=file_path,
@@ -715,11 +714,6 @@ with col2:
             except Exception as e:
                 st.error(f"❌ Lỗi khi upload lên Google Drive: {e}")
 
-            # Chuyển trang về 2_gv_page
+            # 4️⃣ Chuyển trang về 2_gv_page
             st.switch_page("pages/2_gv_page.py")
-                    filepath=file_path
-                )
-                # 4️⃣ Hiển thị link Drive
-                st.success(f"✅ File đã upload lên Google Drive: [Mở file trên Drive]({drive_link})")
-            except Exception as e:
-                st.error(f"❌ Lỗi khi upload lên Google Drive: {e}")
+
