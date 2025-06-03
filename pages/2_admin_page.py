@@ -77,7 +77,7 @@ if da_chon_day_du:
         st.dataframe(df_drive, use_container_width=True)
         st.success("✅ Đã tải danh sách đề cương từ Drive.")
     except Exception as e:
-        st.error(f"❌ Lỗi khi tải danh sách đề cương từ Drive: {e}")
+        st.error(f"❌ Chưa có danh sách đề cương")
 
 
 if st.session_state.get("show_table_flag", False):
