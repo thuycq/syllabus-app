@@ -96,7 +96,7 @@ if st.session_state.get("show_table_flag", False):
 
     # Nút Lưu & Upload lại Drive
     if st.button("💾 Lưu"):
-        file_name_drive = f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx"
+        file_name_drive = f"Import_{he}_{khoa}_{ctdt}.xlsx"
         from utils_drive import upload_syllabus_list_to_drive
 
         drive_link = upload_syllabus_list_to_drive(
@@ -155,13 +155,13 @@ if da_chon_day_du:
             )
 
             # Nút Lưu & Upload
-            if st.button("💾 Lưu & Upload lên Drive"):
-                file_name_drive = f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx"
+            if st.button("💾 Lưu & Upload"):
+                file_name_drive = f"Import_{he}_{khoa}_{ctdt}.xlsx"
                 drive_link = upload_syllabus_list_to_drive(df_import, file_name=file_name_drive)
-                st.success(f"✅ Đã upload danh sách đề cương lên Google Drive: [Mở file trên Drive]({drive_link})")
+                st.success(f"✅ Đã upload danh sách đề cương)")
 
         except Exception as e:
-            st.error(f"❌ Lỗi khi đọc file Excel: {e}")
+            st.error(f"❌ Lỗi khi đọc file Excel")
 
 # ========== QUẢN LÝ TÀI KHOẢN ==========
 st.markdown("---")
