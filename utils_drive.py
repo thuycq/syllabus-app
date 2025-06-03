@@ -103,3 +103,32 @@ def download_syllabus_list_from_drive(file_name):
     fh.seek(0)
     df = pd.read_excel(fh, engine='openpyxl')
     return df
+    
+def upload_syllabus_list_to_drive(df_syllabus_list, file_name="syllabus_list.xlsx"):
+    service = create_drive_service()
+
+    # ID của folder Syllabus List
+    ROOT_FOLDER_ID_SYLLABUS_LIST = "ID_FOLDER_SYLLABUS_LIST"
+
+    # Tạm lưu file Excel ra file tạm (không lưu local app)
+    temp_file = "/tmp/" + file_name  # trên Streamlit Cloud
+
+    # Lưu DataFrame ra file tạm
+    df_syllabus_list.to_excel(temp_file, index=False)
+
+    # Upload lên Drive
+    file_metadata = {
+        'name': file_name,
+        'parents': [ROOT_FOLDER_ID_SYLLABUS_LIST]
+    }
+    media = MediaFileUpload(temp_file, mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+    file = service.files().create(
+        body=file_metadata,
+        media_body=media,
+        fields='id, name, webViewLink'
+    ).execute()
+
+    print(f"Uploaded Syllabus List: {file.get('name')} (ID: {file.get('id')})")
+    return file.get('webViewLink')
+
