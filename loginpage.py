@@ -4,21 +4,21 @@ from utils import setup_page
 setup_page("Syllabus App - Đăng nhập", "📚")
 
 # --- HEADER đẹp ---
-st.markdown(
-    """
-    <div style="display: flex; align-items: center; justify-content: space-between;">
+col1, col2 = st.columns([8, 1])
+with col1:
+    st.markdown(
+        """
         <div style="font-size: 28px; font-weight: bold; color: #003399;">
             📚 Hệ thống Quản lý Đề cương <br> Khoa Tài chính - Ngân hàng, UEL
         </div>
-        <div>
-            <st.img="logo_temp.png", width="80">
-        </div>
-    </div>
-    <hr style="margin-top: 10px; margin-bottom: 20px;">
-    """,
-    unsafe_allow_html=True
-)
+        """,
+        unsafe_allow_html=True
+    )
+with col2:
+    st.image("logo_temp.png", width=80)
 
+#---Phần đưang nhập---
+st.markdown("<hr style='margin-top: 10px; margin-bottom: 20px;'>", unsafe_allow_html=True)
 st.title("🔐 Đăng nhập")
 
 login_type = st.radio("Chọn vai trò", ["Admin", "Giảng viên"], horizontal=True)
