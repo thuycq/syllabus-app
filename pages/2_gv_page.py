@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
-from utils import setup_page
+from utils_drive import setup_page
 
 setup_page("Syllabus App - GV", "📚")
 
