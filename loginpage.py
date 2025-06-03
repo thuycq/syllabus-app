@@ -23,7 +23,7 @@ st.title("🔐 Đăng nhập")
 
 login_type = st.radio(
     label = "",
-    option = ["🛠️ Admin", "🎓Giảng viên"], 
+    options = ["🛠️ Admin", "🎓Giảng viên"], 
     horizontal=True
 )
 
