@@ -17,7 +17,7 @@ with col2:
 with col1:
     st.image("logo_temp.png", width=80)
 
-#---Phần đăng nhập---
+# --- Phần đăng nhập có khung viền ---
 st.markdown(
     """
     <div style="
@@ -26,15 +26,18 @@ st.markdown(
         padding: 20px; 
         background-color: #f9f9f9;
         box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+        margin-top: 20px;
     ">
     """, 
     unsafe_allow_html=True
 )
-st.title("🔐 Đăng nhập")
+
+# Dùng markdown cho tiêu đề (để nằm trong khung)
+st.markdown("### 🔐 **Đăng nhập**")
 
 login_type = st.radio(
     label = "",
-    options = ["🛠️ Admin", "🎓Giảng viên"], 
+    options = ["🛠️ Admin", "🎓 Giảng viên"], 
     horizontal=True
 )
 
@@ -57,19 +60,21 @@ st.markdown(
 # --- Xử lý nút login ---
 if login_type == "🛠️ Admin":
     if st.button("Login"):
-        st.switch_page("pages/1_admin_login.py")
-elif login_type == "🎓Giảng viên":
+        st.switch_page("1_admin_login")
+elif login_type == "🎓 Giảng viên":
     if st.button("Login"):
-        st.switch_page("pages/1_gv_login.py")
+        st.switch_page("1_gv_login")
 
+# Đóng khung viền
 st.markdown("</div>", unsafe_allow_html=True)
 
+# Ẩn menu, sidebar, footer
 hide_streamlit_style = """
-        <style>
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-        header {visibility: hidden;}
-        [data-testid="stSidebar"] {display: none;}
-        </style>
-        """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    [data-testid="stSidebar"] {display: none;}
+    </style>
+"""
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
