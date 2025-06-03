@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
+import io
 from utils import setup_page
 from utils_drive import upload_syllabus_list_to_drive, download_syllabus_list_from_drive
 
