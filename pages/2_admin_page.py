@@ -102,15 +102,15 @@ if da_chon_day_du:
         )
 
         # Nút Lưu & Upload lại Drive
-        if st.button("💾 Lưu & Upload"):
+        if st.button("💾 Lưu"):
             file_name_drive = f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx"
-
+            from utils_drive import upload_syllabus_list_to_drive
             drive_link = upload_syllabus_list_to_drive(
                 st.session_state["edited_df_existing"],
                 file_name=file_name_drive
             )
 
-            st.success(f"✅ Đã cập nhật danh sách)")
+            st.success(f"✅ Đã cập nhật danh sách")
 ✅ Tóm tắt chỉnh:
 
 
