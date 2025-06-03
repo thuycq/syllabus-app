@@ -108,7 +108,6 @@ if st.session_state.get("show_table_flag", False):
 
 # ========== FILE MẪU EXCEL ==========
 #st.markdown("### 📥 Tải file mẫu danh sách đề cương (.xlsx)")
-
 df_mau = pd.DataFrame({
     "STT": [1, 2],
     "Mã HP": ["TC101", "CNTC202"],
@@ -119,13 +118,19 @@ df_mau = pd.DataFrame({
 
 file_name_mau = f"Danh_sach_de_cuong_mau.xlsx"
 
-with st.download_button(
+# Dùng BytesIO để lưu Excel vào RAM
+output = io.BytesIO()
+with pd.ExcelWriter(output, engine='openpyxl') as writer:
+    df_mau.to_excel(writer, index=False)
+output.seek(0)
+
+# Hiển thị nút download
+st.download_button(
     label="⬇️ Tải file mẫu (.xlsx)",
-    data=df_mau.to_excel(index=False, engine='openpyxl'),
+    data=output,
     file_name=file_name_mau,
     mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-):
-    pass
+)
 
 # ========== IMPORT EXCEL & UPLOAD ==========
 if da_chon_day_du:
