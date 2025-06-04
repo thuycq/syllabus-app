@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import os
 from utils import setup_page
+from utils_drive import download_syllabus_list_from_drive
+
 
 setup_page("Syllabus App - GV", "📚")
 
@@ -83,79 +85,56 @@ with col_btn3:
 
 # ========== XUẤT DANH SÁCH MÔN HỌC ==========
 if day_du:
-        file_path = os.path.join("syllabus list", f"Import_{he}_{khoa}_{ctdt.replace(' ', '_')}.xlsx")
-        if os.path.exists(file_path):
-            df = pd.read_excel(file_path, engine="openpyxl")
-            st.success(f"✅ Danh sách đề cương Hệ {he} CTĐT {ctdt} Khóa {khoa}:")
+    st.markdown("### 📋 Xuất danh sách môn học")
 
-            # Header
-            header = st.columns([0.5, 1.5, 4, 1, 3, 1.5, 1.5])
-            header[0].markdown("**STT**")
-            header[1].markdown("**Mã HP**")
-            header[2].markdown("**Tên HP**")
-            header[3].markdown("**Số TC**")
-            header[4].markdown("**Phân công**")
-            header[5].markdown("**Tình trạng**")
-            header[6].markdown("**Quản lý đề cương**")
+    file_name_drive = f"Import_{he.replace(' ', '_')}_{khoa}_{ctdt.replace(' ', '_')}.xlsx"
 
-            for i, row in df.iterrows():
-                col1, col2, col3, col4, col5, col6, col7 = st.columns([0.5, 1.5, 4, 1, 3, 1.5, 1.5])
-                ma_hp = row["Mã HP"]
-                ten_hp = row["Tên HP"]
-                clean_ten_hp = ten_hp.strip()
+    try:
+        df = download_syllabus_list_from_drive(file_name_drive)
 
-                he_folder = ""
-                if he.lower() == "đại học":
-                    he_folder = "daihoc"
-                elif he.lower() == "thạc sĩ":
-                    he_folder = "thacsi"
-                elif he.lower() == "tiến sĩ":
-                    he_folder = "tiensi"
+        st.success(f"✅ Danh sách đề cương Hệ {he} CTĐT {ctdt} Khóa {khoa}:")
 
-                ctdt_folder = ctdt.strip().lower()
-                folder_path_check = os.path.join("syllabus", he_folder, f"khoa{khoa}", ctdt_folder)
+        # Header
+        header = st.columns([0.5, 1.5, 4, 1, 3, 1.5, 1.5])
+        header[0].markdown("**STT**")
+        header[1].markdown("**Mã HP**")
+        header[2].markdown("**Tên HP**")
+        header[3].markdown("**Số TC**")
+        header[4].markdown("**Phân công**")
+        header[5].markdown("**Tình trạng**")
+        header[6].markdown("**Quản lý đề cương**")
 
-                file_name = f"{ma_hp}_ĐCCT_{clean_ten_hp}_{khoa}.docx"
-                file_path_check = os.path.join(folder_path_check, file_name)
+        for i, row in df.iterrows():
+            col1, col2, col3, col4, col5, col6, col7 = st.columns([0.5, 1.5, 4, 1, 3, 1.5, 1.5])
+            ma_hp = row["Mã HP"]
+            ten_hp = row["Tên HP"]
+            clean_ten_hp = ten_hp.strip()
 
-                file_exists = os.path.exists(file_path_check)
+            # TẠM THỜI CHỖ CHECK FILE Syllabus (chút nữa mình sẽ hướng dẫn đồng bộ qua check Drive luôn)
+            file_name_syllabus = f"{ma_hp}_ĐCCT_{clean_ten_hp}_{khoa}.docx"
 
-                col1.write(row["STT"])
-                col2.write(ma_hp)
-                col3.write(ten_hp)
-                col4.write(row["Số TC"])
-                if "Tên GV soạn" in df.columns:
-                    col5.write(row["Tên GV soạn"])
-                else:
-                    col5.write("")
-                col6.markdown("✅ Đã có" if file_exists else "❌ Chưa có")
+            # TODO: Sau sẽ thay chỗ này bằng check_file_in_drive
+            file_exists = False  # tạm thời để False, chút mình sẽ thêm check
 
-                # Nút Chỉnh sửa
-   #             if file_exists:
-    #                if col6.button("✏️ Chỉnh sửa", key=f"edit_{i}"):
-     #                   st.session_state["ma_hp_selected"] = ma_hp
-    #                    st.session_state["ten_hp_selected"] = ten_hp
-   #                     st.session_state["khoa_selected"] = khoa
-    #                    st.session_state["trinh_do_selected"] = he
-    #                    st.session_state["ctdt_selected"] = ctdt
-    #                    st.switch_page("pages/4_gv_Syllabus_Create.py")
-     #           else:
-     #               col6.markdown("🔒")  # Khóa nút nếu đã có
+            col1.write(row["STT"])
+            col2.write(ma_hp)
+            col3.write(ten_hp)
+            col4.write(row["Số TC"])
+            if "Tên GV soạn" in df.columns:
+                col5.write(row["Tên GV soạn"])
+            else:
+                col5.write("")
+            col6.markdown("✅ Đã có" if file_exists else "❌ Chưa có")
 
-                # Tải về
-                if file_exists:
-                    with open(file_path_check, "rb") as f:
-                        col7.download_button(
-                            label="📥 Tải về",
-                            data=f.read(),
-                            file_name=file_name,
-                            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                            key=f"download_{i}"
-                        )
-                else:
-                    if col7.button("📝 Thêm", key=f"create_{i}"):
-                        st.switch_page("pages/4_gv_Syllabus_Create.py")
-        else:
-            st.warning("⚠️ Chưa có danh sách đề cương cho CTĐT này.")
+            # Tải về
+            if file_exists:
+                # sau này sẽ thêm nút tải từ Drive
+                col7.write("📥 Tải về (Drive)")
+            else:
+                if col7.button("📝 Thêm", key=f"create_{i}"):
+                    st.switch_page("pages/4_gv_Syllabus_Create.py")
+
+    except Exception as e:
+        st.warning(f"⚠️ Chưa có danh sách đề cương cho CTĐT này. Lỗi: {e}")
 else:
     st.warning("⚠️ Vui lòng chọn đầy đủ Hệ, Khóa, và Chương trình đào tạo.")
