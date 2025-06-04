@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import os
 from utils import setup_page
-import streamlit.components.v1 as components
 
 setup_page("Syllabus App - GV", "📚")
 
@@ -72,11 +71,14 @@ with col_btn2:
         st.switch_page("pages/4_gv_Syllabus_Create.py")
 
 with col_btn3:
+    folder_syllabus_link = "https://drive.google.com/drive/folders/1vtziPO7_zj7-JJlnxOqP568NV_nP1sK7"
+
     if st.button("📂 Folder đề cương"):
-        folder_syllabus_link = "https://drive.google.com/drive/folders/1vtziPO7_zj7-JJlnxOqP568NV_nP1sK7"
-        # Dùng js mở tab mới
-        js = f"window.open('{folder_syllabus_link}')"  # new tab or window
-        components.html(f"<script>{js}</script>", height=0)
+        # Hiện link ngay sau khi bấm
+        st.markdown(
+            f'<a href="{folder_syllabus_link}" target="_blank">Link Folder đề cương</a>',
+            unsafe_allow_html=True
+        )
         
 
 # ========== XUẤT DANH SÁCH MÔN HỌC ==========
