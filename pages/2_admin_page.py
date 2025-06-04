@@ -77,20 +77,20 @@ if da_chon_day_du:
         df_drive = download_syllabus_list_from_drive(file_name_drive)
 
         st.dataframe(df_drive, use_container_width=True)
-        st.success("✅ Đã tải danh sách đề cương từ Drive.")
+        st.success("✅ Đã tải danh sách đề cương")
 
         # Bật flag để chỉnh trực tiếp
         st.session_state["edited_df_existing"] = df_drive
         st.session_state["show_table_flag"] = True
 
     except Exception as e:
-        st.error(f"❌ Chưa có danh sách đề cương. Lỗi: {e}")
+        st.error(f"❌ Chưa có danh sách đề cương")
         # Tắt flag nếu lỗi
         st.session_state["show_table_flag"] = False
 
     # ========== CHỈNH TRỰC TIẾP sau khi LẤY LIST ==========
     if st.session_state.get("show_table_flag", False):
-        st.markdown("### ✏️ Chỉnh sửa danh sách đề cương (từ Drive)")
+        st.markdown("### ✏️ Chỉnh sửa")
 
         st.session_state["edited_df_existing"] = st.data_editor(
             st.session_state["edited_df_existing"],
@@ -102,16 +102,16 @@ if da_chon_day_du:
             use_container_width=True
         )
 
-        if st.button("💾 Lưu & Upload lại danh sách lên Drive"):
+        if st.button("💾 Lưu"):
             # 🚀 DÙNG LẠI file_name_drive đã KHAI BÁO
             drive_link = upload_syllabus_list_to_drive(
                 st.session_state["edited_df_existing"],
                 file_name=file_name_drive
             )
-            st.success(f"✅ Đã cập nhật danh sách đề cương lên Google Drive: [Mở file trên Drive]({drive_link})")
+            st.success(f"✅ Đã cập nhật")
 
 # ========== FILE MẪU EXCEL ==========
-st.markdown("### 📥 Tải file mẫu danh sách đề cương (.xlsx)")
+st.markdown("### 📥 Tải file mẫu(.xlsx)")
 
 df_mau = pd.DataFrame({
     "STT": [1, 2],
@@ -154,7 +154,7 @@ if da_chon_day_du:
             st.success("✅ Đã đọc thành công file Excel. Bạn có thể chỉnh trực tiếp bên dưới:")
 
         except Exception as e:
-            st.error(f"❌ Lỗi khi đọc file Excel: {e}")
+            st.error(f"❌ Lỗi khi đọc file Excel")
 
     if "df_import" in st.session_state:
         st.session_state["df_import"] = st.data_editor(
@@ -167,13 +167,13 @@ if da_chon_day_du:
             use_container_width=True
         )
 
-        if st.button("💾 Lưu & Upload lại (từ danh sách đã load từ Drive)"):
+        if st.button("💾 Lưu"):
             try:
                 drive_link = upload_syllabus_list_to_drive(
                     st.session_state["df_import"],
                     file_name=file_name_drive
                 )
-                st.success(f"✅ Đã upload danh sách đề cương lên Google Drive: [Mở file trên Drive]({drive_link})")
+                st.success(f"✅ Đã upload danh sách)")
             except Exception as e:
                 st.error(f"❌ Lỗi khi upload danh sách lên Drive: {e}")
 
