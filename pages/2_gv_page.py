@@ -74,11 +74,10 @@ with col_btn3:
     folder_syllabus_link = "https://drive.google.com/drive/folders/1vtziPO7_zj7-JJlnxOqP568NV_nP1sK7"
 
     if st.button("📂 Folder đề cương"):
-        # Hiện link ngay sau khi bấm
-        st.markdown(
-            f'<a href="{folder_syllabus_link}" target="_blank">🗂️ Mở Folder đề cương trên Google Drive</a>',
-            unsafe_allow_html=True
-        )
+        st.link_button(
+        "📂 Folder đề cương",
+        url="https://drive.google.com/drive/folders/1vtziPO7_zj7-JJlnxOqP568NV_nP1sK7"
+    )
         
 
 # ========== XUẤT DANH SÁCH MÔN HỌC ==========
