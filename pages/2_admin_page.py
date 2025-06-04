@@ -76,22 +76,18 @@ if da_chon_day_du:
     try:
         df_drive = download_syllabus_list_from_drive(file_name_drive)
 
-        st.dataframe(df_drive, use_container_width=True)
-        st.success("✅ Đã tải danh sách đề cương")
-
-        # Bật flag để chỉnh trực tiếp
+        # Lưu vào session để chỉnh
         st.session_state["edited_df_existing"] = df_drive
         st.session_state["show_table_flag"] = True
 
+        st.success("✅ Đã tải danh sách đề cương. Bạn có thể chỉnh trực tiếp bên dưới:")
+
     except Exception as e:
-        st.error(f"❌ Chưa có danh sách đề cương")
-        # Tắt flag nếu lỗi
+        st.error(f"❌ Chưa có danh sách đề cương. Lỗi: {e}")
         st.session_state["show_table_flag"] = False
 
-    # ========== CHỈNH TRỰC TIẾP sau khi LẤY LIST ==========
+    # ========== HIỂN THỊ & CHỈNH TRỰC TIẾP ==========
     if st.session_state.get("show_table_flag", False):
-        st.markdown("### ✏️ Chỉnh sửa")
-
         st.session_state["edited_df_existing"] = st.data_editor(
             st.session_state["edited_df_existing"],
             column_config={
@@ -103,7 +99,6 @@ if da_chon_day_du:
         )
 
         if st.button("💾 Lưu"):
-            # 🚀 DÙNG LẠI file_name_drive đã KHAI BÁO
             drive_link = upload_syllabus_list_to_drive(
                 st.session_state["edited_df_existing"],
                 file_name=file_name_drive
