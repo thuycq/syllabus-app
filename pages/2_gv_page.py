@@ -60,7 +60,7 @@ day_du = all([he != "(chọn option)", khoa != "(chọn option)", ctdt != "(ch�
 syllabus_folder = "syllabus"
 
 # Hàng nút chức năng
-col_btn1, col_btn2 = st.columns([1, 1])
+col_btn1, col_btn2, col_btn3 = st.columns([1, 1, 1])
 
 with col_btn1:
     #if st.button("📋 Xuất danh sách môn học"):
@@ -69,6 +69,17 @@ with col_btn1:
 with col_btn2:
     if st.button("📝 Soạn mới đề cương"):
         st.switch_page("pages/4_gv_Syllabus_Create.py")
+
+with col_btn3:
+    folder_syllabus_link = "https://drive.google.com/drive/folders/1vtziPO7_zj7-JJlnxOqP568NV_nP1sK7"
+
+    if st.button("📂 Folder đề cương"):
+        # Hiện link ngay sau khi bấm
+        st.markdown(
+            f'<a href="{folder_syllabus_link}" target="_blank">🗂️ Mở Folder đề cương trên Google Drive</a>',
+            unsafe_allow_html=True
+        )
+        
 
 # ========== XUẤT DANH SÁCH MÔN HỌC ==========
 if day_du:
